@@ -33,7 +33,25 @@ class Perro(object):
 #● Atributos: nombre, dni, email, preferencias (raza, edad, tamaño),historial_adopciones.
 #● Métodos: registrarse, modificar datos, ver historial, etc.
 
-
+class UsuarioAdoptante(object):
+    def __init__(self, nombre, dni, email, raza, edad, tamaño, historial_adopciones):
+        self.nombre = nombre
+        self.dni = dni
+        self.email = email
+        self.edad = edad
+        self.raza = raza
+        self.tamaño = tamaño
+        self.historial_adopciones = historial_adopciones
+        
+    def registrarse(self, registrarse):
+        self.registrarse = registrarse
+        
+    def modificar_datos(self, modificar_datos):
+        self.modificar_datos = modificar_datos
+        
+    def ver_historial(self, ver_historial):
+        self.ver_historial = ver_historial  
+   
 
 #🔁 3. Clase SistemaAdopcion ● Métodos para: ○ Cargar y eliminar perros ○ Registrar usuarios ○ Postular a un perro ○ Confirmar adopción ○ Sugerir perros según preferencias
 # ○ Mostrar listados (perros disponibles, por estado, por usuario)

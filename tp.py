@@ -55,3 +55,57 @@ class UsuarioAdoptante(object):
 
 #🔁 3. Clase SistemaAdopcion ● Métodos para: ○ Cargar y eliminar perros ○ Registrar usuarios ○ Postular a un perro ○ Confirmar adopción ○ Sugerir perros según preferencias
 # ○ Mostrar listados (perros disponibles, por estado, por usuario)
+
+for perro in self.perros:
+             if perro.nombre == nombre:
+               self.perros.remove(perro)
+               print(f"Perro {nombre} eliminado.")
+               break
+         
+            else:
+    
+            print("No se encontró un perro con ese nombre.")
+         print(f"{self.perros}")
+    def registrarUsuario(self,nuevo_usuario):
+        self.usuarios.append(nuevo_usuario)
+    def postularPerro(self,id):
+        for perro in self.perros:
+            if perro.id == id:
+                if perro.estado== "disponible":
+                    perro.cambiarEstado("reservado")
+                    print(f"Perro {id} reservado con éxito!")
+                    return perro
+                else:
+                    print(f"Este perro {id} se encuentra resservado, no es posible postularse")
+                    return None
+        print(f"No se encontró ningun perro con el ID {id}")
+        return None
+    def confirmarAdopcion(self,perro_id,usuario_dni):
+        perro_encontrado= None
+        usuario_encontrado= None
+        for perro in self.perros:
+            if perro.id== perro_id:
+                if perro.estado == ("reservado"):
+                    perro.cambiarEstado("adoptado")
+                    perro_encontrado = perro
+                    break
+        if perro_encontrado is None:
+                raise ValueError(f"No se encontró un perro reservado con ID {perro_id}.")
+        for usuario in self.usuarios:
+            if usuario.dni == usuario_dni:
+                usuario_encontrado= usuario
+                break
+        if usuario_encontrado is None:
+             raise ValueError(f"No se encontró un usuario con DNI {usuario_dni}.")
+        if perro_encontrado and usuario_encontrado:
+             usuario_encontrado.historial_adopciones.append(perro_encontrado)
+             print(f"Adopción confirmada: {perro_encontrado.nombre} fue adoptado por {usuario_encontrado.nombre}")
+    def sugerirPerro(self,dni):
+        for usuario in self.usuarios:
+            if usuario.dni== dni:
+                usuario.preferencias
+                preferencias= usuario.preferencias
+        for perro in self.perros:
+            if perro.estado ==("disponible"):
+                if perro.raza == preferencias and perro.estado == "disponible":
+                   print(f"Se sugiere el perro: {perro.nombre}")

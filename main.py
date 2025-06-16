@@ -72,34 +72,6 @@ class CargarEliminarPerros:
                 return
         print("Perro no encontrado")
 
-# Supongamos que ya tienes una clase Perro definida con atributos como id y nombre.
-class Perro:
-    def __init__(self, id, nombre):
-        self.id = id
-        self.nombre = nombre
-
-# Crear una instancia de la clase CargarEliminarPerros
-sistema = CargarEliminarPerros()
-
-# Crear algunos perros
-perro1 = Perro(1, "Max")
-perro2 = Perro(2, "Luna")
-perro3 = Perro(3, "Rocky")
-
-# Probar el método cargarPerro
-sistema.cargarPerro(perro1)  # Debería imprimir: "Perro cargado: Max"
-sistema.cargarPerro(perro2)  # Debería imprimir: "Perro cargado: Luna"
-sistema.cargarPerro(perro3)  # Debería imprimir: "Perro cargado: Rocky"
-
-# Probar el método eliminarPerro
-sistema.eliminarPerro(2)  # Debería imprimir: "Perro eliminado: Luna"
-sistema.eliminarPerro(4)  # Debería imprimir: "Perro no encontrado"
-
-# Verificar que los perros restantes están en la lista
-for perro in sistema.perros:
-    print(f"Perro en el sistema: {perro.nombre}")
-    
-    
     
 class SistemaAdopcion:
     def __init__(self):

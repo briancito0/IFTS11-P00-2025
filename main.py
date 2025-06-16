@@ -144,4 +144,4 @@ class SistemaAdopcion:
         for perro in self.perros:
             if perro.estado == "disponible" and perro.raza == preferencias:
                 print(f"Se sugiere el perro: {perro.nombre}")
-    dadas
+    

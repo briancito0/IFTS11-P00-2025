@@ -1,0 +1,9 @@
+<h2>Perros disponibles</h2>
+<ul>
+  {% for perro in perros %}
+    <li>{{ perro.nombre }} - {{ perro.raza }} -
+      <a href="{% url 'adoptar_perro' perro.id %}">Adoptar</a>
+    </li>
+  {% endfor %}
+</ul>
+<a href="{% url 'home' %}">Volver</a>

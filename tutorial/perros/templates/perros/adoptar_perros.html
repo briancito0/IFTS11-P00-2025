@@ -1,0 +1,12 @@
+<h2>Postularse para adoptar a {{ perro.nombre }}</h2>
+<form method="post">
+  {% csrf_token %}
+  <label for="dni">Ingresá tu DNI para confirmar:</label>
+  <input type="text" name="dni" required>
+  <button type="submit">Adoptar</button>
+</form>
+
+{% if error %}
+  <p style="color:red">{{ error }}</p>
+{% endif %}
+<a href="{% url 'listar_perros' %}">Volver</a>

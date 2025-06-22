@@ -1,0 +1,7 @@
+<h2>Registro de usuario adoptante</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Registrarme</button>
+</form>
+<a href="{% url 'home' %}">Volver</a>

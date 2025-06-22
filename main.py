@@ -56,92 +56,108 @@ class UsuarioAdoptante(object):
 #🔁 3. Clase SistemaAdopcion ● Métodos para: ○ Cargar y eliminar perros ○ Registrar usuarios ○ Postular a un perro ○ Confirmar adopción ○ Sugerir perros según preferencias
 # ○ Mostrar listados (perros disponibles, por estado, por usuario)
 
-class CargarEliminarPerros:
-    def __init__(self):
-        self.perros = []
-    
-    def cargarPerro(self, nuevo_perro):
-        self.perros.append(nuevo_perro)
-        print(f"Perro cargado: {nuevo_perro.nombre}")
-    
-    def eliminarPerro(self, id_perro):
-        for perro in self.perros:
-            if perro.id == id_perro:
-                self.perros.remove(perro)
-                print(f"Perro eliminado: {perro.nombre}")
-                return
-        print("Perro no encontrado")
-
-    
 class SistemaAdopcion:
     def __init__(self):
         self.perros = []
         self.usuarios = []
 
-    def eliminarPerro(self, nombre):
+    def cargar_perro(self, nuevo_perro):
+        self.perros.append(nuevo_perro)
+        print(f"Perro cargado: {nuevo_perro.nombre}")
+
+    def eliminar_perro(self, id_perro):
         for perro in self.perros:
-            if perro.nombre == nombre:
+            if perro.id == id_perro:
                 self.perros.remove(perro)
-                print(f"Perro {nombre} eliminado.")
-                break
-        else:
-            print("No se encontró un perro con ese nombre.")
-        print(f"{self.perros}")
+                print(f"Perro eliminado: {perro.nombre}")
+                return
+        print("Perro no encontrado.")
 
-    def registrarUsuario(self, nuevo_usuario):
+    def registrar_usuario(self, nuevo_usuario):
         self.usuarios.append(nuevo_usuario)
+        print(f"Usuario registrado: {nuevo_usuario.nombre}")
 
-    def postularPerro(self, id):
+    def postular_perro(self, id_perro):
         for perro in self.perros:
-            if perro.id == id:
+            if perro.id == id_perro:
                 if perro.estado == "disponible":
                     perro.cambiarEstado("reservado")
-                    print(f"Perro {id} reservado con éxito!")
+                    print(f"Perro {perro.nombre} reservado con éxito.")
                     return perro
                 else:
-                    print(f"Este perro {id} se encuentra reservado, no es posible postularse.")
+                    print(f"El perro {perro.nombre} no está disponible.")
                     return None
-        print(f"No se encontró ningún perro con el ID {id}")
+        print("No se encontró el perro con ese ID.")
         return None
 
-    def confirmarAdopcion(self, perro_id, usuario_dni):
+    def confirmar_adopcion(self, id_perro, dni_usuario):
         perro_encontrado = None
         usuario_encontrado = None
 
         for perro in self.perros:
-            if perro.id == perro_id and perro.estado == "reservado":
+            if perro.id == id_perro and perro.estado == "reservado":
                 perro.cambiarEstado("adoptado")
                 perro_encontrado = perro
                 break
 
         if perro_encontrado is None:
-            raise ValueError(f"No se encontró un perro reservado con ID {perro_id}.")
+            raise ValueError("Perro no encontrado o no reservado.")
 
         for usuario in self.usuarios:
-            if usuario.dni == usuario_dni:
+            if usuario.dni == dni_usuario:
                 usuario_encontrado = usuario
                 break
 
         if usuario_encontrado is None:
-            raise ValueError(f"No se encontró un usuario con DNI {usuario_dni}.")
+            raise ValueError("Usuario no encontrado.")
 
         usuario_encontrado.historial_adopciones.append(perro_encontrado)
-        print(f"Adopción confirmada: {perro_encontrado.nombre} fue adoptado por {usuario_encontrado.nombre}")
+        print(f"Adopción confirmada: {perro_encontrado.nombre} fue adoptado por {usuario_encontrado.nombre}.")
 
-    def sugerirPerro(self, dni):
-        usuario_encontrado = None
-        for usuario in self.usuarios:
-            if usuario.dni == dni:
-                usuario_encontrado = usuario
-                break
+    def sugerir_perros(self, dni_usuario):
+        usuario = next((u for u in self.usuarios if u.dni == dni_usuario), None)
 
-        if not usuario_encontrado:
-            print(f"No se encontró un usuario con DNI {dni}")
+        if not usuario:
+            print("Usuario no encontrado.")
             return
 
-        preferencias = usuario_encontrado.preferencias
+        sugerencias = [
+            perro for perro in self.perros
+            if perro.estado == "disponible" and
+               perro.raza == usuario.preferencias.get("raza") and
+               perro.edad == usuario.preferencias.get("edad") and
+               perro.tamaño == usuario.preferencias.get("tamaño")
+        ]
 
-        for perro in self.perros:
-            if perro.estado == "disponible" and perro.raza == preferencias:
-                print(f"Se sugiere el perro: {perro.nombre}")
-    
+        if sugerencias:
+            print(f"Perros sugeridos para {usuario.nombre}:")
+            for p in sugerencias:
+                print(f"- {p.nombre} (ID: {p.id})")
+        else:
+            print("No se encontraron perros que coincidan con las preferencias.")
+
+    def mostrar_perros_disponibles(self):
+        disponibles = [p for p in self.perros if p.estado == "disponible"]
+        if disponibles:
+            print("Perros disponibles:")
+            for p in disponibles:
+                print(f"- {p.nombre} (ID: {p.id}, Raza: {p.raza}, Edad: {p.edad})")
+        else:
+            print("No hay perros disponibles.")
+
+    def mostrar_perros_por_estado(self, estado):
+        filtrados = [p for p in self.perros if p.estado == estado]
+        if filtrados:
+            print(f"Perros con estado '{estado}':")
+            for p in filtrados:
+                print(f"- {p.nombre} (ID: {p.id})")
+        else:
+            print(f"No hay perros con estado '{estado}'.")
+
+    def mostrar_historial_usuario(self, dni_usuario):
+        usuario = next((u for u in self.usuarios if u.dni == dni_usuario), None)
+        if usuario:
+            print(f"Historial de adopciones de {usuario.nombre}:")
+            usuario.ver_historial()
+        else:
+            print("Usuario no encontrado.")

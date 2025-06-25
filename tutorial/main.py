@@ -67,3 +67,23 @@ if __name__ == '__main__':
     usuario = crear_usuario()
     postular(perro, usuario)
     confirmar(perro, usuario)
+    
+    
+    if __name__ == "__main__":
+    sistema = SistemaAdopcion()
+
+    perro1 = Perro("Luna", "Labrador", 2, "Mediano", 22.5, "Excelente", True, "disponible", "Juguetón", 1)
+    perro2 = Perro("Max", "Poodle", 3, "Pequeño", 10.0, "Bueno", True, "disponible", "Tranquilo", 2)
+
+    usuario1 = UsuarioAdoptante("Carlos López", "12345678", "carlos@example.com", "Labrador", 2, "Mediano", [])
+
+    sistema.registrarUsuario(usuario1)
+    sistema.perros.append(perro1)
+    sistema.perros.append(perro2)
+
+    sistema.mostrar_perros_disponibles()
+
+    sistema.postularPerro(1)
+    sistema.confirmarAdopcion(1, "12345678")
+
+    sistema.sugerirPerro("12345678")

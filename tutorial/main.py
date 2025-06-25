@@ -1,7 +1,6 @@
 import os
 import django
 
-
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 django.setup()
 
@@ -13,17 +12,15 @@ def crear_perro():
         nombre='Luna',
         raza='Labrador',
         edad=2,
-        tamaño='Mediano',
+        tamaño='M',  # debe coincidir con choices
         peso=22.5,
+        sexo='M',
         estado_salud='Excelente',
         vacunado=True,
         estado='disponible',
         temperamento='Juguetón'
     )
-    if creado:
-        print(f"Perro {perro.nombre} creado.")
-    else:
-        print(f"Perro {perro.nombre} ya existe.")
+    print(f"{'Creado' if creado else 'Ya existe'}: {perro.nombre}")
     return perro
 
 
@@ -35,13 +32,10 @@ def crear_usuario():
             'email': 'carlos@example.com',
             'raza_preferida': 'Labrador',
             'edad_preferida': 2,
-            'tamaño_preferido': 'Mediano'
+            'tamaño_preferido': 'M'
         }
     )
-    if creado:
-        print(f"Usuario {usuario.nombre} creado.")
-    else:
-        print(f"Usuario {usuario.nombre} ya existe.")
+    print(f"{'Creado' if creado else 'Ya existe'}: {usuario.nombre}")
     return usuario
 
 
@@ -53,6 +47,7 @@ def postular(perro, usuario):
     perro.save()
     print(f"Perro {perro.nombre} reservado para {usuario.nombre}.")
 
+
 def confirmar(perro, usuario):
     if perro.estado != 'reservado':
         print(f"El perro {perro.nombre} no está reservado.")
@@ -61,7 +56,7 @@ def confirmar(perro, usuario):
     perro.save()
     usuario.historial_adopciones.add(perro)
     print(f"{usuario.nombre} adoptó a {perro.nombre}.")
-    
+
 
 if __name__ == '__main__':
     perro = crear_perro()

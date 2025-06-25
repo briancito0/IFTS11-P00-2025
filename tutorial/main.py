@@ -61,13 +61,6 @@ def confirmar(perro, usuario):
     perro.save()
     usuario.historial_adopciones.add(perro)
     print(f"{usuario.nombre} adoptó a {perro.nombre}.")
-
-if __name__ == '__main__':
-    perro = crear_perro()
-    usuario = crear_usuario()
-    postular(perro, usuario)
-    confirmar(perro, usuario)
-    
     
     if __name__ == "__main__":
     sistema = SistemaAdopcion()

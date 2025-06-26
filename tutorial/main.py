@@ -9,7 +9,7 @@ from perros.models import Perro, UsuarioAdoptante
 def crear_perro():
     perro, creado = Perro.objects.get_or_create(
         nombre='Luna',
-        raza='Labrador',pip show django
+        raza='Labrador',
         edad=2,
         tamaño='M',
         peso=22.5,
